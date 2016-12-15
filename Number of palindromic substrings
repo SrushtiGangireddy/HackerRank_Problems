@@ -1,0 +1,137 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        int num_queries=sc.nextInt();
+        
+        String str=sc.next();
+        
+        for(int i=0;i<num_queries;i++){
+            
+            int q=sc.nextInt();
+      //      System.out.println(q);
+            if(q == 1){
+                int a=sc.nextInt();
+                int b=sc.nextInt();
+                
+                int t=sc.nextInt();
+                
+                str=transformString(str,a,b,t);
+            }else if(q == 2){
+                int a=sc.nextInt();
+                int b=sc.nextInt();
+                
+                int num_palindromes=findNumPalindromicSubsets(str,a,b);
+                System.out.println(num_palindromes);
+            }
+            
+        }
+    }
+    
+    public static String transformString(String str,int a,int b,int t){
+        ArrayList<String> chars=new ArrayList<String>();
+        chars.add("a");chars.add("b");chars.add("c");
+        chars.add("d");chars.add("e");chars.add("f");
+        chars.add("g");chars.add("h");chars.add("i");
+        chars.add("j");chars.add("k");chars.add("l");
+        chars.add("m");chars.add("n");chars.add("o");
+        chars.add("p");chars.add("q");chars.add("r");
+        chars.add("s");chars.add("t");chars.add("u");
+        chars.add("v");chars.add("w");chars.add("x");
+        chars.add("y");chars.add("z");
+        
+   //     System.out.println(chars.indexOf("z"));
+        
+        for(int k=0;k<t;k++){
+            
+              for(int i=a;i<=b;i++){
+
+                String temp=Character.toString(str.charAt(i));
+                if(chars.contains(temp)){
+                    int index=chars.indexOf(temp);
+                    if(index < chars.size()-1){
+                        temp=chars.get((++index));
+                    }else if(index == chars.size()-1){
+                        temp=chars.get(0);
+                    }
+                }
+
+                str=str.substring(0,i)+temp+str.substring(i+1,str.length());
+          //      System.out.println(str);
+
+            }
+            
+        }
+        
+      
+        
+        return str;
+        
+    }
+    
+    public static int findNumPalindromicSubsets(String str,int a,int b){
+        
+        ArrayList<String> characters=new ArrayList<String>();
+        ArrayList<String> subsets=new ArrayList<String>();
+        ArrayList<String> palindromes=new ArrayList<String>();
+        
+        String sub="";
+        
+        for(int i=a;i<=b;i++){
+            String temp=Character.toString(str.charAt(i));
+            sub=sub+temp;
+            characters.add(temp);
+        }
+        
+        int n=sub.length();
+  //      System.out.println("Main String"+sub);
+        for(int size=1;size<=n;size++){
+            
+            for(int j=0;j<n;j++){
+                
+               
+                
+                if((j+size) <= n){
+                     subsets.add(sub.substring(j,j+size));
+                }
+               
+            }
+            
+        }
+        
+        
+            
+        for(String p:subsets){
+            if(isPalindrome(p)){
+                palindromes.add(p);
+            }
+        }
+        
+  //      System.out.println(palindromes);
+        
+        return palindromes.size();
+        
+        
+    }
+    
+    public static boolean isPalindrome(String s){
+        
+        StringBuilder orig=new StringBuilder(s);
+        String rev=orig.reverse().toString();
+        
+        if(s.equals(rev)){
+            return true;
+        }else{
+            return false;
+        }
+     
+    }
+    
+   
+  
+}
