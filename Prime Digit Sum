@@ -1,0 +1,158 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        
+        int num_queries=sc.nextInt();
+        int num_digits=sc.nextInt();
+        
+        int min=0;
+        int max=0;
+        
+        String min_temp="1";
+        String max_temp="9";
+        
+        for(int i=1;i<num_digits;i++){
+            min_temp=min_temp+"0";
+            max_temp=max_temp+"9";
+        }
+        
+        min=Integer.valueOf(min_temp);
+        max=Integer.valueOf(max_temp);
+        
+        int count=0;
+        
+        
+        
+        for(int num=min;num<=max;num++){
+            
+            int three=findThreeDigitPrimes(num);
+            int four=findFourDigitPrimes(num);
+            int five=findFiveDigitPrimes(num);
+            
+            if(num_digits == 4){
+                 if((three == num_digits-2)){
+                     if((four == num_digits-3)){
+                            count++;
+                        }
+                 }
+            }else if(num_digits == 3){
+                if((three == num_digits-2)){
+                     count++;
+                 }
+            }else if(num_digits < 3){
+                count = 0;
+            }
+            
+            if((three == num_digits-2)){
+                if((four == num_digits-3)){
+                    if((five == num_digits-4)){
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        
+        System.out.println(count);
+        
+        
+    }
+    
+    public static int findThreeDigitPrimes(int num){
+        
+        String temp=String.valueOf(num);
+        int three_counter=0;
+        for(int i=0;i<temp.length();i++){
+            
+            if((i+3) <= temp.length()){
+                int number=Integer.valueOf(temp.substring(i,i+3));
+                int sum=digitsum(number);
+                if(isPrime(sum)){
+                    three_counter++;
+                }
+            }
+            
+        }
+        
+      //  System.out.println("number" + temp + "number of three digit consecutive primes" + three_counter);
+     
+        return three_counter;
+        
+    }
+    
+     public static int findFourDigitPrimes(int num){
+        
+        String temp=String.valueOf(num);
+        int four_counter=0;
+        for(int i=0;i<temp.length();i++){
+            
+            if((i+4) <= temp.length()){
+                int number=Integer.valueOf(temp.substring(i,i+4));
+                int sum=digitsum(number);
+                if(isPrime(sum)){
+                    four_counter++;
+                }
+            }
+            
+        }
+        
+   //     System.out.println("number" + temp + "number of three digit consecutive primes" + four_counter);
+         
+         return four_counter;
+        
+    }
+    
+     public static int findFiveDigitPrimes(int num){
+        
+        String temp=String.valueOf(num);
+        int five_counter=0;
+        for(int i=0;i<temp.length();i++){
+            
+            if((i+5) <= temp.length()){
+                int number=Integer.valueOf(temp.substring(i,i+5));
+                int sum=digitsum(number);
+                if(isPrime(sum)){
+                    five_counter++;
+                }
+            }
+            
+        }
+        
+     //   System.out.println("number" + temp + "number of three digit consecutive primes" + five_counter);
+         
+         return five_counter;
+        
+    }
+    
+    
+    
+    
+    public static boolean isPrime(int num){
+        for(int i=2;i<num;i++){
+            if(num % i == 0){
+                return false;
+            }
+        }
+        
+        if(num == 1 | num == 0){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public static int digitsum(int num){
+        int sum=0;
+        while(num > 0){
+            sum=sum+(num%10);
+            num=num/10;
+        }
+        return sum;
+    }
+    
+}
