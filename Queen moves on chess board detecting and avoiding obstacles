@@ -1,0 +1,184 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        
+        int[][] chess_board=new int[n+1][n+1];
+        
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=n;j++){
+                chess_board[i][j]=0;
+            }
+        }
+        
+        int qa=sc.nextInt();
+        int qb=sc.nextInt();
+        
+        chess_board[qa][qb] = 9;
+        
+        
+        for(int z=0;z<k;z++){
+            
+            int a=sc.nextInt();
+            int b=sc.nextInt();
+            
+            chess_board[a][b]=1;
+            
+        }
+        
+        int num_queen_attack_moves=0;
+        
+    //    System.out.println(move_left(chess_board,qa,qb,n));
+        
+        num_queen_attack_moves = move_up(chess_board,qa,qb,n) + move_down(chess_board,qa,qb,n) + move_left(chess_board,qa,qb,n) + move_right(chess_board,qa,qb,n) + diag_up_left(chess_board,qa,qb,n) + diag_up_right(chess_board,qa,qb,n) + diag_down_left(chess_board,qa,qb,n) + diag_down_right(chess_board,qa,qb,n);
+        
+        System.out.println(num_queen_attack_moves);
+        
+    }
+        
+        public static int move_up(int[][] board,int qa,int qb,int n){
+            
+            int moves=0;
+            
+            for(int x=qa+1,y=qb;x<=n;x++){
+                
+                if(board[x][y] == 0){
+                    moves=moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return moves;
+            
+        }
+    
+        public static int move_down(int[][] board,int qa,int qb,int n){
+            
+            int num_moves=0;
+            
+            for(int x=qa-1,y=qb;x>0;x--){
+                
+                if(board[x][y] == 0){
+                    num_moves=num_moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return num_moves;
+        }
+    
+        public static int move_left(int[][] board,int qa,int qb,int n){
+            
+            int moves=0;
+            
+            for(int x=qa,y=qb-1;y>0;y--){
+                
+                if(board[x][y] == 0){
+                    moves=moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return moves;
+        }
+    
+        public static int move_right(int[][] board,int qa,int qb,int n){
+            
+            int moves=0;
+            
+            for(int x=qa,y=qb+1;y<=n;y++){
+                
+                if(board[x][y] == 0){
+                    moves=moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            return moves;
+        }
+    
+        public static int diag_up_left(int[][] board,int qa,int qb,int n){
+            
+            int moves=0;
+            
+            for(int x=qa+1,y=qb-1;x<=n&y>0;x++,y--){
+                
+                if(board[x][y] == 0){
+                    moves=moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return moves;
+        }
+    
+        public static int diag_up_right(int[][] board,int qa,int qb,int n){
+            
+            int num_moves=0;
+            
+            for(int x=qa+1,y=qb+1;x<=n&y<=n;x++,y++){
+                
+                if(board[x][y] == 0){
+                    num_moves=num_moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return num_moves;
+            
+        }
+    
+        public static int diag_down_left(int[][] board,int qa,int qb,int n){
+            
+            int moves=0;
+            
+            for(int x=qa-1,y=qb-1;x>0&y>0;x--,y--){
+                
+                if(board[x][y] == 0){
+                    moves=moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return moves;
+            
+        }
+    
+        public static int diag_down_right(int[][] board,int qa,int qb,int n){
+            
+            int num_moves=0;
+            
+            for(int x=qa-1,y=qb+1;x>0&y<=n;x--,y++){
+                
+                if(board[x][y] == 0){
+                    num_moves=num_moves+1;
+                }else{
+                    break;
+                }
+                
+            }
+            
+            return num_moves;
+        }
+        
+}
