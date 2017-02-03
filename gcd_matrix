@@ -1,0 +1,75 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        
+        int size_a=sc.nextInt();
+        int size_b=sc.nextInt();
+        int q=sc.nextInt();
+        
+        int[] a=new int[size_a];
+        int[] b=new int[size_b];
+        
+        for(int i=0;i<size_a;i++){
+            a[i]=sc.nextInt();
+        }
+        
+        for(int j=0;j<size_b;j++){
+            b[j]=sc.nextInt();
+        }
+        
+        int[][] mat=new int[size_a][size_b];
+        
+        for(int x=0;x<size_a;x++){
+            
+            int temp_a=a[x];
+            
+            for(int y=0;y<size_b;y++){
+                
+                int temp_b=b[y];
+                
+                mat[x][y]=find_gcd(temp_a,temp_b);
+              
+            }
+        }
+        
+        for(int z=0;z<q;z++){
+            
+            int r1=sc.nextInt();
+            int c1=sc.nextInt();
+            
+            int r2=sc.nextInt();
+            int c2=sc.nextInt();
+            TreeSet<Integer> ts=new TreeSet<Integer>();
+            for(int aa=r1;aa<=r2;aa++){
+                for(int bb=c1;bb<=c2;bb++){
+                    ts.add(mat[aa][bb]);
+                }
+            }
+            
+            System.out.println(ts.size());
+            
+        }
+        
+    }
+    
+    public static int find_gcd(int a,int b){
+        int max=1;
+        
+        if(a == b){
+            return a;
+        }
+        for(int i=1;i<=a | i<=b;i++){
+            if((a%i) == 0 & (b%i) == 0){
+                if(max < i){
+                    max=i;
+                }
+            }
+        }
+        
+        return max;
+        
+    }
+}
