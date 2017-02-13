@@ -1,0 +1,145 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        
+        int n=sc.nextInt();
+        
+        HashMap<String,Integer> mark_dict=new HashMap<String,Integer>();
+        
+        for(int i=0;i<n;i++){
+            String temp=sc.next();
+            mark_dict.put(temp,benVal(temp));
+        }
+        
+        TreeMap<String,Integer> sortMap=sortMapByBenefitValue(mark_dict);
+        selectSubsetNonPrefixNeighbours(sortMap);
+        
+    }
+    
+    public static int benVal(String word){
+        char[] ch=word.toCharArray();
+        
+        HashMap<String,Integer> ascii=new HashMap<String,Integer>();
+        
+        ascii.put("A",65);ascii.put("B",66);ascii.put("C",67);ascii.put("D",68);
+        ascii.put("E",69);ascii.put("F",70);ascii.put("G",71);ascii.put("H",72);
+        ascii.put("I",73);ascii.put("J",74);ascii.put("K",75);ascii.put("L",76);
+        ascii.put("M",77);ascii.put("N",78);ascii.put("O",79);ascii.put("P",80);
+        ascii.put("Q",81);ascii.put("R",82);ascii.put("S",83);ascii.put("T",84);
+        ascii.put("U",85);ascii.put("V",86);ascii.put("W",87);ascii.put("X",88);
+        ascii.put("Y",89);ascii.put("Z",90);
+        
+        int val=0;
+        
+        for(char c:ch){
+            val = val + (Integer)ascii.get(Character.toString(c));
+        }
+        
+        return val;
+        
+    }
+    
+    public static TreeMap<String,Integer> sortMapByBenefitValue(HashMap<String,Integer> map){
+        Comparator<String> comp=new ValueComparator(map);
+        TreeMap<String,Integer> sortedMap=new TreeMap<String,Integer>(comp);
+        sortedMap.putAll(map);
+        return sortedMap;
+    }
+    
+    public static boolean neighbours(String a, String b,TreeMap<String,Integer> dict){
+        int val_a=benVal(a);
+        int val_b=benVal(b);
+        
+        if(!(b.startsWith(a)))
+            return false;
+        
+        SortedMap<String,Integer> sorted_dict=dict.headMap(a);
+        Iterator it=sorted_dict.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry pair=(Map.Entry)it.next();
+            String key=(String)pair.getKey();
+            int val=(Integer)pair.getValue();
+            
+            if(key.equals(b)){
+                
+            }else{
+                if(key.startsWith(a)){
+                    if(val < val_b){
+                        return false;
+                    }
+                }
+            }
+        }
+        
+        return true;
+        
+    }
+    
+    public static void selectSubsetNonPrefixNeighbours(TreeMap<String,Integer> dict){
+        
+        long maxBenefitValue=0;
+        
+        TreeMap<String,Integer> subset=new TreeMap<String,Integer>();
+        String prev_word="";
+        
+        Iterator mark=dict.entrySet().iterator();
+        while(mark.hasNext()){
+            Map.Entry mark_pair=(Map.Entry)mark.next();
+            String word=(String)mark_pair.getKey();
+            Integer word_val=(Integer)mark_pair.getValue();
+            
+            if(prev_word == null || prev_word.length() == 0){
+                prev_word=word;
+                subset.put(word,word_val);
+                maxBenefitValue = maxBenefitValue + word_val;
+            }else{
+                
+                Iterator prefix=subset.entrySet().iterator();
+                int counter=0;
+                while(prefix.hasNext()){
+                    Map.Entry pre=(Map.Entry)prefix.next();
+                    
+                    String pre_word=(String)pre.getKey();
+                    int pre_word_val=(Integer)pre.getValue();
+                    
+                    if(neighbours(word,pre_word,dict)){
+                        counter=1;
+                    }
+                }
+                
+                if(counter == 0){
+                    subset.put(word,word_val);
+                    prev_word=word;
+                    maxBenefitValue = maxBenefitValue + word_val;
+                }
+                
+                
+            }
+            
+        }
+        
+        System.out.println(maxBenefitValue);
+        
+    }
+    
+    
+}
+
+class ValueComparator implements Comparator<String>{
+    HashMap<String,Integer> map=new HashMap<String,Integer>();
+    
+    public ValueComparator(HashMap<String,Integer> map){
+        this.map.putAll(map);
+    }
+    
+    public int compare(String s1,String s2){
+        if(Solution.benVal(s1) >= Solution.benVal(s2))
+            return -1;
+        else
+            return 1;
+    }
+    
+}
