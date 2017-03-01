@@ -1,0 +1,105 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        for(int i=0;i<n;i++){
+            String expr = sc.next();
+            
+            MyStack open = new MyStack();
+            
+            boolean flag = balancedBrackets(open,expr);
+                
+               
+            if(flag){
+                System.out.println("YES");
+            }else{
+                System.out.println("NO");
+            }
+            
+            
+        }
+        
+    }
+    
+    public static boolean balancedBrackets(MyStack stack,String s){
+        
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch == '[' || ch == '{' || ch == '('){
+                stack.push(ch);
+            }else if(ch == ']'){
+                if(stack.isEmpty()){
+                    return false;
+                }
+                char c = (char)stack.pollLast();
+                if(c != '['){
+                    return false;
+                }
+            }else if(ch == ')'){
+                if(stack.isEmpty()){
+                    return false;
+                }
+                char c = (char)stack.pollLast();
+                if(c != '('){
+                    return false;
+                }
+            }else if(ch == '}'){
+                if(stack.isEmpty()){
+                    return false;
+                }
+                char c = (char)stack.pollLast();
+                if(c != '{'){
+                    return false;
+                }
+            }
+            
+        }
+        
+        return stack.isEmpty();
+    }
+    
+}
+
+class MyStack{
+    private final LinkedList _list = new LinkedList();
+    
+    public void push(Object value){
+        _list.add(value);
+    }
+    
+    public Object pop() throws EmptyStackException{
+        if(isEmpty()){
+            throw new EmptyStackException();
+        }
+       return _list.pop();
+    }
+    
+    public Object pollFirst() throws EmptyStackException{
+        if(isEmpty()){
+            throw new EmptyStackException();
+        }
+        return _list.pollFirst();
+    }
+    
+    public Object pollLast() throws EmptyStackException{
+        if(isEmpty()){
+            throw new EmptyStackException();
+        }
+        return _list.pollLast();
+    }
+    
+    public int size(){
+        return _list.size();
+    }
+    
+    public boolean isEmpty(){
+        return _list.isEmpty();
+    }
+    
+    
+}
