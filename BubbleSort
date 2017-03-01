@@ -1,0 +1,53 @@
+import java.util.*;
+import java.math.*;
+import java.io.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int[] numbers = new int[n];
+        
+        int total_swap_number = 0;
+        
+        for(int x=0;x<n;x++){
+            numbers[x]=sc.nextInt();
+        }
+        
+        
+        for(int i=0;i<n;i++){
+            
+            int number_swaps = 0;
+            
+            
+            for(int j=0;j<n-1;j++){
+                
+                if(numbers[j] > numbers[j+1]){
+                    swap(numbers,j,j+1);
+                    number_swaps++;
+                }
+                
+            }
+            
+            if(number_swaps == 0){
+                break;
+            }
+            
+            total_swap_number += number_swaps;
+        }
+        
+        
+        System.out.println("Array is sorted in "+total_swap_number+" swaps.");
+        System.out.println("First Element: "+numbers[0]);
+        System.out.println("Last Element: "+numbers[n-1]);
+        
+    }
+    
+    public static void swap(int[] num,int i,int j){
+        int temp = num[i];
+        num[i]=num[j];
+        num[j]=temp;
+    }
+    
+}
