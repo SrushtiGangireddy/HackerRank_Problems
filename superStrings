@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        String s = sc.next();
+        
+        ArrayList<String> sub = getSubStrings(s);
+        ArrayList<String> superStrings = isSuper(sub);
+        System.out.println(superStrings);
+        System.out.println(superStrings.size());
+    }
+    
+    public static ArrayList<String> getSubStrings(String word){
+        
+        int n = word.length();
+        ArrayList<String> subStrings = new ArrayList<String>();
+        for(int i=0;i<n;i++){
+            
+            for(int j=1;j<=n-i;j++){
+                
+                subStrings.add(word.substring(i,j+i));
+                
+            }
+            
+        }
+        
+        return subStrings;
+        
+    }
+    
+    public static ArrayList<String> isSuper(ArrayList<String> substrings){
+        ArrayList<String> superStrings = new ArrayList<String>();
+        for(String s:substrings){
+            BigInteger number = new BigInteger(s);
+            BigInteger zero = new BigInteger("0");
+       //     System.out.println(number);
+            BigInteger six = new BigInteger("6");
+            if(number.equals(zero)){
+                superStrings.add(String.valueOf(number));
+            }else if((number.remainder(six)).equals(zero)){
+                String temp = s.replaceFirst("^0*","");
+                if(temp.equals(s)){
+                    superStrings.add(String.valueOf(number));
+                }else{
+                    
+                }
+            }
+        }
+        
+        return superStrings;
+        
+    }
+    
+    
+}
