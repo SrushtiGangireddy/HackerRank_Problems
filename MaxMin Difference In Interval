@@ -1,0 +1,112 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int q = sc.nextInt();
+        
+        int[] numbers = new int[n];
+        
+        for(int i=0;i<n;i++){
+            numbers[i] = sc.nextInt();
+        }
+        
+        HashMap<ArrayList<Integer>,ArrayList<Integer>> pairs = getPairs(numbers);
+     //   System.out.println(pairs);   
+        
+        
+        for(int j=0;j<q;j++){
+            
+            int low = sc.nextInt();
+            int high = sc.nextInt();
+            int counter = 0;
+            Iterator it = pairs.entrySet().iterator();
+            while(it.hasNext()){
+                
+                Map.Entry pair = (Map.Entry)it.next();
+                ArrayList<Integer> ind = (ArrayList<Integer>)pair.getKey();
+                ArrayList<Integer> maxmin = (ArrayList<Integer>)pair.getValue();
+                
+                int b = (Integer)ind.get(0);
+                int e = (Integer)ind.get(1);
+                
+                int max = (Integer)maxmin.get(0);
+                int min = (Integer)maxmin.get(1);
+                
+                if(testMinMax(low,high,b,e,n,max,min)){
+                    counter ++;
+                }
+            }
+            System.out.println(counter);   
+        }
+        
+        //System.out.println(counter);
+    }
+    
+    public static HashMap<ArrayList<Integer>,ArrayList<Integer>> getPairs(int[] numbers){
+        
+        int n = numbers.length;
+        
+        HashMap<ArrayList<Integer>,ArrayList<Integer>> maxmin_pairs = new HashMap<ArrayList<Integer>,ArrayList<Integer>>();
+        
+        for(int i=0;i<n;i++){
+            
+            int min = numbers[i];
+            int max = numbers[i];
+            
+            for(int j=i;j<n;j++){
+                
+                for(int x=i;x<=j;x++){
+                    if(numbers[x] < min){
+                        min = numbers[x];
+                    }
+                    if(numbers[x] > max){
+                        max = numbers[x];
+                    }
+                }
+                
+                
+                ArrayList<Integer> temp_ind = new ArrayList<Integer>();
+                temp_ind.add(i);
+                temp_ind.add(j);
+                
+                ArrayList<Integer> max_min = new ArrayList<Integer>();
+                max_min.add(max);
+                max_min.add(min);
+                
+                maxmin_pairs.put(temp_ind,max_min);
+                
+              //  System.out.print(temp_ind);
+              //  System.out.print(max_min);
+              //  System.out.println();
+                
+                
+            }
+        }
+        
+        return maxmin_pairs;
+        
+    }
+    
+    public static boolean testMinMax(int low,int high,int b,int e,int n,int max,int min){
+        
+        
+        if(!((0<=b) & (b<=e) & (e<n))){
+            return false;
+        }
+        
+        int diff = max - min;
+        
+        if(!((low <= diff) & (diff <= high))){
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
+}
