@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int num_queries = sc.nextInt();
+        
+        for(int i=0;i<num_queries;i++){
+            int num_participants = sc.nextInt();
+            
+            ArrayList<Integer> size_preferences = new ArrayList<Integer>();
+            
+            for(int j=0;j<num_participants;j++){
+                size_preferences.add(sc.nextInt());
+            }
+            
+            int num_vendors = sc.nextInt();
+            ArrayList<ArrayList<Integer>> avail = new ArrayList<ArrayList<Integer>>();
+            ArrayList<Integer> available = new ArrayList<Integer>();
+            for(int k=0;k<num_vendors;k++){
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                int min = sc.nextInt();
+                int max = sc.nextInt();
+                temp.add(min);
+                temp.add(max);
+                avail.add(temp);
+                
+                for(int p=min;p<=max;p++){
+                    available.add(p);
+                }
+                
+            }
+            
+            GetTheShirts(available,size_preferences);
+            
+        }
+        
+        
+    }
+    
+    public static void GetTheShirts(ArrayList<Integer> vendors,ArrayList<Integer> preferred){
+        
+        
+        int counter = 0;
+        
+        TreeSet<Integer> set = new TreeSet<Integer>();
+        
+        for(Integer size:preferred){
+            if(vendors.contains(size)){
+                set.add(size);
+                vendors.remove(size);
+            }
+        }
+        
+        System.out.println(set.size());
+        
+    }
+    
+}
