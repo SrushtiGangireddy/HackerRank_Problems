@@ -112,3 +112,111 @@ public class Solution{
     }
     
 }
+
+
+*********************************** ALGO ***********************************************
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int num_fighters = sc.nextInt();
+        int num_teams = sc.nextInt();
+        int num_queries = sc.nextInt();
+        
+        HashMap<Integer,ArrayList<Integer>> teams = new HashMap<Integer,ArrayList<Integer>>();
+        
+        for(int i=0;i<num_fighters;i++){
+            ArrayList<Integer> temp;
+            int strength = sc.nextInt();
+            int team = sc.nextInt();
+            
+            if(teams.containsKey(team)){
+                temp = (ArrayList<Integer>)teams.get(team);
+                temp.add(strength);
+                teams.put(team,temp);
+            }else{
+                temp = new ArrayList<Integer>();
+                temp.add(strength);
+                teams.put(team,temp);
+            }
+            
+       }
+        
+        for(int j=0;j<num_queries;j++){
+            
+            int query = sc.nextInt();
+            int s = sc.nextInt();
+            int t = sc.nextInt();
+            
+            if(query == 1){
+                addTeamMember(teams,s,t);
+            }else if(query == 2){
+                fight(teams,s,t);
+            }
+            
+        }
+        
+        
+    }
+    
+    public static void addTeamMember(HashMap<Integer,ArrayList<Integer>> teams,int strength,int team){
+        
+        ArrayList<Integer> temp = (ArrayList<Integer>)teams.get(team);
+        
+        if(temp != null){
+            temp.add(strength);
+            teams.put(team,temp);
+        }else{
+            temp = new ArrayList<Integer>();
+            temp.add(strength);
+            teams.put(team,temp);
+        }
+        
+    }
+    
+    public static void fight(HashMap<Integer,ArrayList<Integer>> teams,int x,int y){
+        
+        ArrayList<Integer> team_x = new ArrayList<Integer>();
+        ArrayList<Integer> team_y = new ArrayList<Integer>();
+        
+        for(Integer xa:(ArrayList<Integer>)teams.get(x)){
+            team_x.add(xa);
+        }
+        
+        for(Integer xb:(ArrayList<Integer>)teams.get(y)){
+            team_y.add(xb);
+        }
+        
+        
+        Collections.sort(team_x,Collections.reverseOrder());
+        Collections.sort(team_y,Collections.reverseOrder());
+        
+        int game_a = 0;
+        int game_b = 0;
+        
+        do{
+            
+            if(game_a >= team_x.size()){
+                System.out.println(y);
+                return;
+            }
+            game_b += (Integer)team_x.get(game_a);
+            
+            if(game_b >= team_y.size()){
+                System.out.println(x);
+                return;
+            }
+            game_a += (Integer)team_y.get(game_b);
+            
+        }while(1==1);
+        
+    }
+    
+}
+
+
