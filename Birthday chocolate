@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        ArrayList<Integer> choc = new ArrayList<Integer>();
+        
+        for(int i=0;i<n;i++){
+            choc.add(sc.nextInt());
+        }
+        
+        int d = sc.nextInt();
+        int m = sc.nextInt();
+        int counter = 0;
+        for(int x=0;x<choc.size();x++){
+            
+            int sum = (Integer)choc.get(x);
+            int m_count = 1;
+            if(m < choc.size()){
+               
+                  for(int y=x+1;y<choc.size();y++){
+                      sum = sum + (Integer)choc.get(y);
+                      m_count++;
+                      
+                      if(m_count == m){
+                          break;
+                      }
+                  }
+            }
+          
+            if(sum == d){
+                counter++;
+            }
+        }
+        
+        System.out.println(counter);
+    }
+}
