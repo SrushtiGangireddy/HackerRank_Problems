@@ -1,0 +1,106 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int num_queries = sc.nextInt();
+        
+        for(int z=0;z<num_queries;z++){
+            
+                 int r = sc.nextInt();
+            int p = sc.nextInt();
+            int n = sc.nextInt();
+            int m = sc.nextInt();
+
+            ArrayList<Integer> pantry = new ArrayList<Integer>();
+
+            for(int i = 0;i<m;i++){
+                pantry.add(sc.nextInt());
+            }
+
+            int[] market = new int[p];
+
+            for(int j=0;j<p;j++){
+                market[j]=sc.nextInt();
+            }
+
+            int[][] recipes = new int[r][p];
+
+            HashMap<Integer,Integer> needed = new HashMap<Integer,Integer>();
+            
+            for(int k=0;k<r;k++){
+                int counter = 0;
+                for(int l=0;l<p;l++){
+                    recipes[k][l]=sc.nextInt();
+                    if(recipes[k][l] == 1){
+                        counter++;
+                    }
+                }
+                needed.put(k,counter);
+            }
+         //   System.out.println(needed);
+            
+            Map<Integer,Integer> sorted_needed = sortByValue(needed);
+            
+        //    System.out.println(sorted_needed);
+            
+            cookRecipes(recipes,pantry,market,n,r,p,sorted_needed);
+            
+        }
+        
+    }
+    
+    private static Map<Integer,Integer> sortByValue(Map<Integer,Integer> needed){
+        List<Map.Entry<Integer,Integer>> list = new LinkedList<Map.Entry<Integer,Integer>>(needed.entrySet());
+        
+        Collections.sort(list,new Comparator<Map.Entry<Integer,Integer>>(){
+            public int compare(Map.Entry<Integer,Integer> o1,Map.Entry<Integer,Integer> o2){
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+        
+        Map<Integer,Integer> sorted = new LinkedHashMap<Integer,Integer>();
+        for(Map.Entry<Integer,Integer> pair:list){
+            sorted.put(pair.getKey(),pair.getValue());
+        }
+        
+        return sorted;
+    }
+    
+    public static void cookRecipes(int[][] recipes,ArrayList<Integer> pantry,int[] market,int n,int r,int p,Map<Integer,Integer> needed){
+      
+        int count = 0;
+        int cost = 0;
+      
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        
+        for(Map.Entry<Integer,Integer> entry : needed.entrySet()){
+            al.add(entry.getKey());
+        }
+        
+     //   System.out.println(al);
+        
+        for(Integer ind:al){
+            if(count >= n){
+                System.out.println(cost);
+                return;
+            }
+            int[] temp = recipes[ind];
+            
+            for(int i=0;i<p;i++){
+                if(temp[i] == 1){
+                    if(!pantry.contains(i)){
+                        cost = cost + market[i];
+                    }
+                }
+            }
+            
+            count++;
+        }
+        
+    }
+    
+}
