@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        String expression = null;
+        
+        while(n>0){
+            
+            if(expression == null){
+                if(n>=2){
+                    expression = "min(int, int)";
+                    n = n-2;
+                }
+            }else{
+                expression = "min(int, "+expression+")";
+                n = n-1;
+            }
+            
+        }
+        
+        System.out.println(expression);
+        
+    }
+}
