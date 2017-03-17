@@ -1,0 +1,173 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    
+    private static ArrayList<String> combos = new ArrayList<String>();
+    
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        
+        ArrayList<Pole> poles = new ArrayList<Pole>();
+        
+        for(int i=0;i<n;i++){
+            
+            int alt = sc.nextInt();
+            int weight = sc.nextInt();
+            
+            Pole p = new Pole(alt,weight);
+            poles.add(p);
+        }
+        
+        System.out.println(arrangePoles(poles,k,n));
+        
+    }
+    
+    public static int arrangePoles(ArrayList<Pole> poles,int k,int n){
+        
+        int height = -1;
+        int cost = 0;
+        if(k == 1){
+            
+            Iterator it = poles.iterator();
+            while(it.hasNext()){
+                
+                Pole p = (Pole)it.next();
+                
+                if(height == -1){
+                    height = p.getAltitude();
+                }else{
+                    int temp_alt = (Integer)p.getAltitude();
+                    int temp_w = (Integer)p.getWeight();
+                    cost = cost + (temp_w * (temp_alt - height));
+                }
+                
+            }
+            return cost;
+        }else if(n == k){
+            return 0;
+        }else{
+            
+            ArrayList<Integer> stacks_cost = new ArrayList<Integer>();
+            
+            int arr[] = new int[n];
+            
+            for(int i=0;i<n;i++){
+                arr[i] = i;                
+            }
+            
+            generateCombinations(arr,k,0,new int[k]);
+            ArrayList<ArrayList<Integer>> indices = new ArrayList<ArrayList<Integer>>();
+            Iterator combo_it = combos.iterator();
+            while(combo_it.hasNext()){
+                String combo = (String)combo_it.next();
+                if(combo.contains("0")){
+                    
+                     ArrayList<Integer> temp = new ArrayList<Integer>();
+                    
+                    for(int j=0;j<combo.length();j++){
+                        
+                        String pos = Character.toString(combo.charAt(j));
+                        if(!pos.equals("[") & !pos.equals("]") & !pos.equals(",") & !pos.equals(" ") & !pos.equals("")){
+                             int number = Integer.valueOf(pos);
+                             temp.add(number);
+                        }
+                    }
+                    
+                     if(temp.size() > 0){
+                            indices.add(temp);
+                        }
+                }
+            }
+            
+            Iterator stacking = indices.iterator();
+            while(stacking.hasNext()){
+                ArrayList<Integer> arrange = (ArrayList<Integer>)stacking.next();
+                
+                int stacking_cost = 0;
+                int stacking_height = poles.size()-1;
+                for(int x=arrange.size()-1;x>=0;x--){
+                    
+                    int arr_temp = (Integer)arrange.get(x);
+                    
+                    Pole p_temp = (Pole)poles.get(arr_temp);
+                    int p_temp_a = p_temp.getAltitude();
+                    int p_temp_w = p_temp.getWeight();
+                    
+                    for(int y=stacking_height;y>arr_temp;y--){
+                        
+                        Pole st_p = (Pole)poles.get(y);
+                        int p_a = st_p.getAltitude();
+                        int p_w = st_p.getWeight();
+                        
+                        stacking_cost = stacking_cost + p_w * (p_a - p_temp_a);
+                        
+                    }
+                    
+                    stacking_height = arr_temp - 1;
+                    
+                }
+                
+                stacks_cost.add(stacking_cost);
+                
+            }
+            
+             Collections.sort(stacks_cost);
+             return stacks_cost.get(0);            
+            
+        }
+    }
+    
+    public static void generateCombinations(int[] arr,int k,int startPosition,int[] result){
+        
+        ArrayList<String> res = new ArrayList<String>();
+        
+        if(k == 0){
+       //     System.out.println(Arrays.toString(result));
+            combos.add(Arrays.toString(result));
+            return;
+        }
+        
+        for(int i=startPosition;i<=arr.length-k;i++){
+            result[result.length - k] = arr[i];
+            generateCombinations(arr,k-1,i+1,result);
+        }
+        
+        
+    }
+    
+    
+}
+
+class Pole{
+    
+    int altitude;
+    int weight;
+    
+    public Pole(int a, int w){
+        altitude = a;
+        weight = w;
+    }
+    
+    public void setAltitude(int a){
+        altitude = a;
+    }
+    
+    public void setWeight(int w){
+        weight = w;
+    }
+    
+    public int getAltitude(){
+        return altitude;
+    }
+    
+    public int getWeight(){
+        return weight;
+    }
+    
+}
