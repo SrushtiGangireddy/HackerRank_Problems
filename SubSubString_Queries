@@ -67,8 +67,14 @@ public class Solution{
             
         }
         
-        Collections.sort(length);
-        System.out.println(length.get(length.size()-1));
+        if(length.size() == 0){
+            System.out.println(0);
+        }else{
+             Collections.sort(length);
+            System.out.println(length.get(length.size()-1));
+        }
+        
+       
     }
     
 }
