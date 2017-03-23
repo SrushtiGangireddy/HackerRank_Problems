@@ -1,0 +1,269 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner scan = new Scanner(System.in);
+        
+        int num_test_cases = scan.nextInt();
+        
+        for(int i=0;i<num_test_cases;i++){
+            
+            int xh = scan.nextInt();
+            int yh = scan.nextInt();
+            
+            
+            int xc = scan.nextInt();
+            int yc = scan.nextInt();
+            int sc = scan.nextInt();
+            double tc = getTimeTaken(xh,yh,xc,yc,sc);
+            
+            Player p = new Player();
+            p.setPx(xc);
+            p.setPy(yc);
+            p.setSpeed(sc);
+            p.setDistance(tc);
+            p.setID(1);
+            ArrayList<Player> players = new ArrayList<Player>();
+            players.add(p);
+           
+            for(int j=0;j<5;j++){
+                
+                int xi = scan.nextInt();
+                int yi = scan.nextInt();
+                
+                int si = scan.nextInt();
+                
+                double player_time = getTimeTaken(xh,yh,xi,yi,si);
+                
+                Player pl = new Player();
+                
+                pl.setPx(xi);
+                pl.setPy(yi);
+                pl.setSpeed(si);
+                pl.setDistance(player_time);
+                pl.setID(j+2);
+                players.add(pl);
+                
+            }
+            
+            Collections.sort(players);     
+         //   System.out.println(players);
+            
+            Iterator it = players.iterator();
+            int index = 0;
+            int temp = 0;
+            while(it.hasNext()){
+                
+                Player player = (Player)it.next();
+                
+                if(player.getID() == 1){
+                    
+                    index = temp;
+                    
+                }
+                
+                temp++;
+                
+            }
+            
+            Player player1; Player player2;
+            if(index == 0){
+                player1 = (Player)players.get(0);
+                player2 = (Player)players.get(1);
+            }else{
+                player1 = (Player)players.get(index);
+                if(index-1 >= 0){
+                    player2 = (Player)players.get(index-1);
+                }else{
+                    player2 = (Player)players.get(index+1);
+                }
+            }
+             // System.out.println(player1+" "+player2);
+            StartTheGame(player1,player2,xh,yh);
+            
+        }
+        
+        
+    }
+    
+    
+    public static void StartTheGame(Player p1,Player p2,int xh,int yh){
+        
+        int xc = p1.getPx();
+        int yc = p1.getPy();
+        int sc = p1.getSpeed();
+        
+        int xp = p2.getPx();
+        int yp = p2.getPy();
+        int pc = p2.getSpeed();
+        
+        int counter = 0;
+         
+//        System.out.println(xc+" "+yc+" ");
+//        System.out.println(xp+" "+yp+" ");
+        
+        while((xc <= xh) | (yc <= yh)){
+            
+            if(counter%2 == 0){
+                
+                if(Math.abs(yc) == Math.abs(yh)){
+                    if(xc < xh){
+                        xc = xc + sc;
+                    }else if(xc > xh){
+                        xc = xc - sc;
+                    }else if(xc == xh){
+                        break;
+                    }
+                }else if( yc < yh){
+                    
+                    if(xc < xh){
+                        xc = xc + sc;
+                        yc = yc + sc;
+                    }else if(xc > xh){
+                        xc = xc - sc;
+                        yc = yc + sc;
+                    }else if(xc == xh){
+                        yc = yc + sc;
+                    }
+                }else if(yc > yh){
+                    
+                    if(xc < xh){
+                        xc = xc +sc;
+                        yc = yc - sc;
+                    }else if(xc > xh){
+                        xc = xc - sc;
+                        yc = yc - sc;
+                    }else if(xc == xh){
+                        yc = yc - sc;
+                    }
+                    
+                }
+                
+                counter++;
+            }else{
+                
+                 if(yp == yh){
+                    if(xp < xh){
+                        xp = xp + pc;
+                    }else if(xp > xh){
+                        xp = xp - pc;
+                    }else if(xp == xh){
+                        break;
+                    }
+                }else if( yp < yh){
+                    
+                    if(xp < xh){
+                        xp = xp + pc;
+                        yp = yp + pc;
+                    }else if(xp > xh){
+                        xp = xp - pc;
+                        yp = yp + pc;
+                    }else if(xp == xh){
+                        yp = yp + pc;
+                    }
+                }else if(yp > yh){
+                    
+                    if(xp < xh){
+                        xp = xp +pc;
+                        yp = yp - pc;
+                    }else if(xp > xh){
+                        xp = xp - pc;
+                        yp = yp - pc;
+                    }else if(xp == xh){
+                        yp = yp - pc;
+                    }
+                    
+                }
+                counter++;
+            }
+            
+            
+        }
+        
+        if((xc == xh) & (yc == yh)){
+            System.out.println("YES");
+        }else{
+            if((xp == xh) & (yp == yh)){
+                System.out.println("NO");
+            }
+        }
+        
+        
+    }
+    
+    
+    public static double getTimeTaken(int xh,int yh,int xc,int yc,int sc){
+        
+       double time = 0.0;
+        
+       time = Math.sqrt(Math.pow((Math.abs(xc)-Math.abs(xh)),2) + Math.pow((Math.abs(yc)-Math.abs(yh)),2));
+        
+       return time;
+        
+    }
+    
+}
+
+class Player implements Comparable<Player>{
+    
+    public int px;
+    public int py;
+    public double distance;
+    public int speed;
+    public int id;
+    
+    public int getID(){
+        return id;
+    }
+    
+    public void setID(int id){
+        this.id = id;
+    }
+    
+    public int getSpeed(){
+        return speed;
+    }
+    
+    public void setSpeed(int s){
+        this.speed = s;
+    }
+    
+    public int getPx(){
+        return px;
+    }
+    
+    public int getPy(){
+        return py;
+    }
+    
+    public double getDistance(){
+        return distance;
+    }
+    
+    public void setPx(int x){
+        this.px = x;
+    }
+    
+    public void setPy(int y){
+        this.py = y;
+    }
+    
+    public void setDistance(double d){
+        this.distance = d;
+    }
+    
+    public int compareTo(Player p){
+        double dist = ((Player)p).getDistance();
+        if(this.distance > dist){
+            return 1;
+        }else if(this.distance < dist){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+    
+}
