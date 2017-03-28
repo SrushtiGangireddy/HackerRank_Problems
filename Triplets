@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        int[] numbers = new int[n];
+        
+        for(int i=0;i<n;i++){
+            numbers[i] = sc.nextInt();
+        }
+        
+        int counter = 0;
+        ArrayList<String> triplets = new ArrayList<String>();
+        for(int p=0;p<n;p++){
+            
+            int a = numbers[p];
+            
+            for(int q=p+1;q<n;q++){
+                
+                int b = numbers[q];
+                
+                for(int r=q+1;r<n;r++){
+                    
+                    int c = numbers[r];
+                    
+                    if((a<b) & (b<c)){
+                        
+                        String temp1=String.valueOf(a);
+                        String temp2=String.valueOf(b);
+                        String temp3=String.valueOf(c);
+                        String temp = temp1+temp2+temp3;
+                        if(!triplets.contains(temp)){
+                            triplets.add(temp);
+                            counter++;
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        System.out.println(counter);
+        
+    }
+}
