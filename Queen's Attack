@@ -1,0 +1,158 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n =sc.nextInt();
+        int k = sc.nextInt();
+        
+        String[][] chess_board = new String[n][n];
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                chess_board[i][j] = "O";
+            }
+        }
+        
+        int rq = sc.nextInt() - 1;
+        int cq = sc.nextInt() - 1;
+ //       System.out.println(rq + " " + cq);
+        chess_board[rq][cq] = "Q";
+        
+        for(int x=0;x<k;x++){
+            
+            int ri = sc.nextInt()-1;
+            int ci = sc.nextInt()-1;
+            
+            chess_board[ri][ci] = "X";
+            
+        } 
+        
+  /*      for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                System.out.print(chess_board[i][j]+" ");
+            }
+            System.out.println();
+        }  */
+        
+        // Left 
+        
+        int row = 0;
+        int col = 0;
+        
+        int attack_counter = 0;
+        
+        for(row = rq;row<=rq;row++){
+            for(col = cq-1;col>=0;col--){
+                if(chess_board[row][col].equals("O")){
+                    attack_counter++;
+                }else if(chess_board[row][col].equals("X")){
+                    row = n;
+                    col = -1;
+                }
+            }     
+        }
+        
+        //Right
+        
+        for(row =rq;row<=rq;row++){
+            for(col=cq+1;col<n;col++){
+                if(chess_board[row][col].equals("O")){
+                    attack_counter++;
+                }else if(chess_board[row][col].equals("X")){
+                    row = n;
+                    col = n;
+                }
+            }
+        }          
+        
+        //Down
+        
+        for(row=rq+1;row<n;row++){
+            for(col=cq;col<=cq;col++){
+                if(chess_board[row][col].equals("O")){
+                    attack_counter++;
+                }else if(chess_board[row][col].equals("X")){
+                    row = n;
+                    col = n;
+                }
+            }
+        }
+        
+        // Up
+        
+        for(row=rq-1;row>=0;row--){
+            for(col=cq;col<=cq;col++){
+                if(chess_board[row][col].equals("O")){
+                    attack_counter++;
+                }else if(chess_board[row][col].equals("X")){
+                    row = -1;
+                    col = n;
+                }
+            }
+        }
+        
+        //Diagonal Down Left
+        
+        for(row=rq+1,col=cq-1;(row < n & col >= 0);row++,col--){
+            
+            if(chess_board[row][col].equals("O")){
+                attack_counter++;
+            }else if(chess_board[row][col].equals("X")){
+                row = n;
+                col = -1;
+            }
+            
+        }
+        
+        // Diagonal Down Right
+        
+        for(row=rq+1,col=cq+1;((row < n) & (col < n));row++,col++){
+            
+            if(chess_board[row][col].equals("O")){
+                attack_counter++;
+            }else if(chess_board[row][col].equals("X")){
+                row = n;
+                col = n;
+            }
+            
+        }
+        
+        // Diagonal Up Left
+        
+        for(row = rq-1,col = cq-1; ((row >= 0) & (col >= 0));row--,col--){
+            
+            if(chess_board[row][col].equals("O")){
+                attack_counter++;
+            }else if(chess_board[row][col].equals("X")){
+                row = -1;
+                col = -1;
+            }
+            
+        }
+        
+        // Diagonal Up Right
+        
+        for(row=rq-1,col=cq+1;((row >= 0) & (col < n));row--,col++){
+            
+            if(chess_board[row][col].equals("O")){
+                attack_counter++;
+            }else if(chess_board[row][col].equals("X")){
+                row = -1;
+                col = n;
+            }
+            
+        }
+        
+        
+        System.out.println(attack_counter);
+        
+        
+    }
+    
+}
