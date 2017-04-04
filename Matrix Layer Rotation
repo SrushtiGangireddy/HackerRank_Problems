@@ -1,0 +1,283 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int rows = sc.nextInt();
+        int cols = sc.nextInt();
+        
+        int rotate_times = sc.nextInt();
+        
+        int[][] matrix = new int[rows][cols];
+        
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+        
+        
+        for(int i=0;i<rotate_times;i++){
+            
+            matrix = spiralOrder(matrix);
+            
+        }
+        
+        
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                System.out.print(matrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+        
+        
+//      System.out.println(spiral);
+        
+        
+    }
+    
+    public static int[][] spiralOrder(int[][] matrix){
+        
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        
+       
+        
+        if(matrix == null || matrix.length == 0){
+            return matrix;
+        }
+        
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] final_result = new int[rows][cols];
+        int counter = 1 ;
+        int fr = 0;
+        int fc = 0;
+        
+        int[][] rotateMatrix = new int[rows][cols];
+        
+        
+        int x=0;
+        int y=0;
+        
+        int fx=0;
+        int fy=0;
+        
+        while(rows > 0 && cols > 0){
+            
+            ArrayList<Integer> layer = new ArrayList<Integer>();
+            
+            if(rows == 1){
+                for(int i=0;i<cols;i++){
+                    
+                    layer.add(matrix[x][y++]);
+                    
+                }
+                break;
+            }else if(cols == 1){
+                for(int i=0;i<rows;i++){
+                    layer.add(matrix[x++][y]);
+                }
+                break;
+            }
+            
+            // Moving top --> Right 
+            
+            for(int i=0;i<cols-1;i++){
+                
+                layer.add(matrix[x][y++]);
+                
+            }
+            
+            // Moving right --> bottom
+            
+            
+            for(int i=0;i<rows-1;i++){
+               
+                layer.add(matrix[x++][y]);
+                
+               
+            }
+            
+            for(int i=0;i<cols-1;i++){
+                layer.add(matrix[x][y--]);
+            }
+            
+            for(int i=0;i<rows-1;i++){
+                layer.add(matrix[x--][y]);
+            }
+            
+            x++;
+            y++;
+            
+            
+            rotateMatrix =fillTheMatrix(rotateMatrix,layer,rows,cols,x,y);
+            
+
+            int a = 0;
+            int b = 0;
+            
+            // Result --> right
+            
+            for(int i=0;i<cols-1;i++){
+                final_result[fx][fy++]=rotateMatrix[a][b++];
+            }
+            
+          
+            // Result --> Right - down
+            
+            for(int i=0;i<rows-1;i++){
+                final_result[fx++][fy] = rotateMatrix[a++][b];
+            }
+            
+            // Result --> Bottom - left 
+            
+            for(int i=0;i<cols-1;i++){
+                final_result[fx][fy--] = rotateMatrix[a][b--];
+            }
+            
+            // Result --> Bottom - Up
+            
+            for(int i=0;i<rows-1;i++){
+                final_result[fx--][fy] = rotateMatrix[a--][b];
+            }
+            
+            fx = fx + counter;
+            fy = fy + counter;
+            
+            counter++;
+            
+            rows = rows - 2;
+            cols = cols - 2;
+            
+ 
+            for(int i=0;i<final_result.length;i++){
+                for(int j=0;j<final_result[0].length;j++){
+                    System.out.print(final_result[i][j]+" ");
+                }
+                System.out.println();
+            }
+            
+            
+        }
+        
+    
+        
+        return final_result;
+        
+    }
+    
+    public static int[][] fillTheMatrix(int[][] matrix,ArrayList<Integer> layer,int rows,int cols,int x,int y){
+        
+       int[][] temp_matrix = new int[rows][cols];
+       int counter = 0;
+       int z = 0;
+       int size = layer.size();
+        
+        for(int i=0;i<=0;i++){
+            
+            for(int j=0;j<cols;j++){
+                counter++;
+                if(z <= size-1){
+                     temp_matrix[i][j] = (Integer)layer.get((z++));
+                }
+               
+                
+            }
+            
+        }
+        
+        
+        
+        
+         for(int i=1;i<rows;i++){
+            
+            for(int j=cols-1;j<cols;j++){
+                counter++;
+                 if(z <= size-1){
+                     temp_matrix[i][j] = (Integer)layer.get((z++));
+                }
+                
+            }
+            
+        }
+        
+         for(int i=rows-1;i<rows;i++){
+            
+            for(int j=cols-2;j>=0;j--){
+                counter++;
+                 if(z <= size-1){
+                     temp_matrix[i][j] = (Integer)layer.get((z++));
+                }                
+            }
+            
+        }
+        
+         for(int i=rows-2;i>=0;i--){
+            
+            for(int j=0;j<=0;j++){
+                counter++;
+                 if(z <= size-1){
+                     temp_matrix[i][j] = (Integer)layer.get((z++));
+                }                
+            }
+            
+        }
+        
+       
+        
+  
+        
+        int[][] rotate_matrix = new int[rows][cols];
+        
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                
+               if((i==0) & (j==0)){
+                   
+                   rotate_matrix[i+1][j] = temp_matrix[i][j];
+                   
+               }else if((i==0) & (j>0)){
+                   
+                   rotate_matrix[i][j-1] = temp_matrix[i][j];
+                   
+               }else if((i < rows - 1) && (j==0)){
+                   
+                   rotate_matrix[i+1][j] = temp_matrix[i][j];
+                   
+               }else if((i == rows -1) & (j==0)){
+                   
+                   rotate_matrix[i][j+1] = temp_matrix[i][j];
+                   
+               }else if((i == rows - 1) & (j < cols -1)){
+                   
+                   rotate_matrix[i][j+1] = temp_matrix[i][j];
+                   
+               }else if((i < rows - 1) & (j ==cols - 1)){
+                   
+                   rotate_matrix[i-1][j] = temp_matrix[i][j];
+                   
+               }else if((i == rows - 1) & (j == cols - 1)){
+                   
+                   rotate_matrix[i-1][j] = temp_matrix[i][j];
+                       
+               }else if((i > 0 & i <=rows - 1) & ( j == cols -1)){
+                   
+                   rotate_matrix[i+1][j] = temp_matrix[i][j];
+                   
+               }
+                
+                
+            }
+        }
+        
+       
+        return rotate_matrix;
+    }
+    
+}
