@@ -1,0 +1,34 @@
+String reverseParentheses(String s) {
+ 
+    while(s.contains("(") | s.contains(")")){
+        s = modifyString(s);
+        System.out.println(s);
+    }
+    return s;
+}
+
+public String modifyString(String word){
+    
+    Stack<Integer> ind = new Stack<Integer>();
+    String reverseWord = "";
+    for(int i=0;i<word.length();i++){
+        String ch = Character.toString(word.charAt(i));
+        if((ch.equals("("))){
+            ind.push(i);
+        }else if(ch.equals(")")){
+            int j = ind.pop();
+            
+            String first = word.substring(0,j);
+            String next = word.substring(i+1,word.length());
+            String mid = word.substring(j+1,i);
+            StringBuilder sb = new StringBuilder(mid);
+            sb.reverse();
+            mid = sb.toString();
+            String temp = first+mid+next;
+            reverseWord = temp;
+            return temp;
+            
+        }
+    }
+    return reverseWord;
+}
