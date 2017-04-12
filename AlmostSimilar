@@ -1,0 +1,52 @@
+boolean areSimilar(int[] A, int[] B) {
+        ArrayList<Integer> notSimilar = new ArrayList<Integer>();
+        
+        int len = A.length;
+        
+        for(int i=0;i<len;i++){
+                
+                int a = A[i];
+                int b = B[i];
+                
+                if(a != b){
+                        notSimilar.add(i);
+                }
+                
+        }
+        
+        if(notSimilar.size() == 0){
+                return true;
+        }else if(notSimilar.size() > 2){
+                return false;
+        }
+        
+        int counter = 0;
+        
+        if(notSimilar.size() == 2){
+                
+                int index1 = notSimilar.get(0);
+                int index2 = notSimilar.get(1);
+                
+                int num1 = B[index1];
+                int num2 = B[index2];
+                 
+                B[index1] = num2;
+                B[index2] = num1;
+                
+                counter++;
+                int count = 0;
+                for(int i=0;i<len;i++){
+                        if(A[i] == B[i]){
+                                count++;
+                        }
+                }
+                
+                if(count == len){
+                        return true;
+                }
+                
+        }
+        
+        
+        return false;
+}
