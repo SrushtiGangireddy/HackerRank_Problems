@@ -1,0 +1,31 @@
+boolean palindromeRearranging(String inputString) {
+    
+    ArrayList<String> letters = new ArrayList<String>();
+    TreeSet<String> unique_letters = new TreeSet<String>();
+    
+    for(int i=0;i<inputString.length();i++){
+        String ch = Character.toString(inputString.charAt(i));
+        letters.add(ch);
+        unique_letters.add(ch);
+    }
+    
+    int odd_counter = 0;
+    int even_counter = 0;
+    
+    Iterator it = unique_letters.iterator();
+    while(it.hasNext()){
+        String letter = (String)it.next();
+        int count = Collections.frequency(letters,letter);
+        if((count%2) != 0){
+            odd_counter++;
+        }else if((count%2) == 0){
+            even_counter++;
+        }
+    }
+    
+    if(odd_counter > 1){
+        return false;
+    }
+    
+    return true;
+}
