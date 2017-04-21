@@ -1,0 +1,48 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        String inputString = sc.nextLine();
+        String words[] = inputString.split(" ");
+        int num_landmarks = sc.nextInt();
+        ArrayList<String> landmarks = new ArrayList<String>();
+        
+        for(int i=0;i<num_landmarks;i++){
+            landmarks.add(sc.next());
+        }
+        
+        //System.out.println(inputString);
+        //System.out.println(landmarks);
+        String outputString = "";
+        for(int i=0;i<words.length;i++){
+            String temp = words[i];
+            
+            if(landmarks.contains(temp)){
+                String t = temp;
+                temp = "<b>"+t+"</b>";
+                
+                if(outputString.length() == 0){
+                    outputString = temp+" ";
+                }else{
+                    outputString += temp+" ";
+                }
+                    
+                    
+            }else{
+                if(outputString.length() == 0){
+                    outputString = temp+" ";
+                }else{
+                    outputString += temp+" ";
+                }
+            }
+        }
+        
+        System.out.println(outputString);
+        
+        
+    }
+}
