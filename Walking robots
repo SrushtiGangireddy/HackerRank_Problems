@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        for(int i=0;i<n;i++){
+            
+            String move = sc.next();
+            System.out.println(RoboMove(move));
+            
+            
+        }
+        
+        
+    }
+    
+    public static int RoboMove(String move){
+        if(move.length() == 1){
+            return 0;
+        }
+        
+        int collision_counter = 0;
+        
+        while(move.contains("rl")){
+            //System.out.println("Before rl "+move);
+            collision_counter += 2;
+            move = move.replaceFirst("rl","d");
+            //System.out.println("After rl "+move);
+        }
+        
+        while(move.contains("dl")){
+            //System.out.println("Before dl "+move);
+            collision_counter += 1;
+            move = move.replaceFirst("dl","d");
+          //  System.out.println("After dl "+move);
+        }
+        
+         while(move.contains("rd")){
+        //     System.out.println("Before rd "+move);
+            collision_counter += 1;
+            move = move.replaceFirst("rd","d");
+      //       System.out.println("After rd "+move);
+        }
+        
+        return collision_counter;
+        
+    }
+    
+}
