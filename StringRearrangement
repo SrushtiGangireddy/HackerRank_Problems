@@ -1,0 +1,32 @@
+boolean stringsRearrangement(String[] inputArray){
+    boolean[] seen = new boolean[inputArray.length];
+    findSequence(inputArray,null,seen,0);
+    return success;
+}
+
+boolean success = false;
+
+void findSequence(String[] a,String prev,boolean[] seen,int n){
+    if(n == a.length){
+        success = true;
+        return;
+    }
+    
+    for(int i=0;i<a.length;i++){
+        if(!seen[i] && (prev == null || differByOne(prev,a[i]))){
+            seen[i] = true;
+            findSequence(a,a[i],seen,n+1);
+            seen[i] = false;
+        }
+    }
+}
+
+boolean differByOne(String a,String b){
+    int count = 0;
+    for(int i=0;i<a.length();i++){
+        if(a.charAt(i) != b.charAt(i)){
+            count++;
+        }
+    }
+    return count == 1;
+}
