@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc=new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        String v=sc.next();
+        String c=sc.next();
+        
+        char[] vin=new char[n];
+        char[] cat=new char[n];
+        
+        int counter=0;
+        
+        for(int i=0;i<n;i++){
+            vin[i]=v.charAt(i);
+            cat[i]=c.charAt(i);
+            
+            if((vin[i] != cat[i]) & vin[i] != '.'){
+                counter++;
+            }
+            
+        }
+        
+        System.out.println(counter);
+        
+    }
+}
