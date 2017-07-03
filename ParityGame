@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static int smallestSizeSubsequence(int n, int[] A) {
+       ArrayList<ArrayList<Integer>> result=new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> sum=new ArrayList<Integer>();
+        ArrayList<Integer> removedSize=new ArrayList<Integer>();
+        for(int i=0;i<(1<<n);i++){
+            ArrayList<Integer> temp=new ArrayList<Integer>();
+            int eleSum=0;
+            int counter=0;
+            for(int j=0;j<n;j++){
+                if((i & (1<<j)) > 0){
+                    temp.add(A[j]);
+                    counter++;
+                }else{
+                    eleSum+=A[j];
+                }
+            }
+            
+            if((eleSum) % 2 == 0 & eleSum != 0){
+                sum.add(eleSum);
+                removedSize.add(counter);
+            }
+             result.add(temp);
+        }
+        
+     
+  //      System.out.println(removedSize);
+     
+        if(removedSize.size() > 0){
+              Collections.sort(removedSize);
+        
+        return removedSize.get(0);
+        }else{
+            return -1;
+        }
+    
+        
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] A = new int[n];
+        for(int A_i = 0; A_i < n; A_i++){
+            A[A_i] = in.nextInt();
+        }
+        int result = smallestSizeSubsequence(n, A);
+        System.out.println(result);
+    }
+}
