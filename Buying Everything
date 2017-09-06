@@ -1,0 +1,158 @@
+Solution 1:
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution{
+    
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Integer> times = new ArrayList<Integer>();
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int k = sc.nextInt();
+        
+        int[] b = new int[n];
+        
+        for(int i=0;i<n;i++){
+            b[i] = sc.nextInt();
+        }
+        
+        if(m > n){
+            System.out.println("-1");   
+        }else{
+            
+            for(int i=1;i<n;i++){
+                
+                if(b[i] == 1){
+                    int time = calculateTime(b,i,m,k);
+                    
+                    if(time != -1){
+                        times.add(time);
+                    }
+                }
+                
+            }
+            
+        }
+        
+        Collections.sort(times);
+        System.out.println(times.get(0));
+        
+    }
+    
+
+
+public static int calculateTime(int[] b,int i,int m,int k){
+    
+    
+    int c = 1;
+    
+    int time = i;
+    int prev = i;
+    
+    
+    for(int j=i+1;j<b.length && c<m;j++){
+        
+       if(b[j] == 1){
+           time += (j-prev)*c*k;
+           c++;
+           prev = j;
+       }
+        
+        
+    }
+    
+    
+    //      System.out.println(c);
+    //      System.out.println(time);
+    if(c == m){
+        return time;
+    }
+    
+    return -1;
+    
+  
+    
+}
+
+}
+
+Solution 2: 
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        ArrayList<Integer> uni = new ArrayList<Integer>();
+        ArrayList<Long> times = new ArrayList<Long>();
+        
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int k = sc.nextInt();
+        
+        int[] b = new int[n];
+        
+        for(int i=0;i<n;i++){
+            b[i] = sc.nextInt();
+            
+            if(b[i] == 1){
+                uni.add(i);
+            }
+        }
+        
+        if(m > n){
+            System.out.println("-1");
+        }else{
+            
+            int size = uni.size();
+            
+            for(int i=0;i<size;i++){
+                
+               if((i+m) <= size){
+                   
+                   long time = 0;
+                   int c = 0;
+                   int prev = 0;
+                   
+                   
+                   for(int j=i;j<(i+m);j++){
+                       if(c != 0){
+                      time += (uni.get(j) - prev)*c*k;
+                       }else{
+                           time += (uni.get(j)-prev);
+                       }
+                       c++;
+                       prev = uni.get(j);
+                   }
+                   
+                   times.add(time);
+                 
+               }
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+        //System.out.println(times);
+        Collections.sort(times);
+        System.out.println(times.get(0));
+        
+        
+    }
+}
