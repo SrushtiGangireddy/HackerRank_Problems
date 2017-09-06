@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int q = sc.nextInt();
+        
+        for(int i=0;i<q;i++){
+            
+            boolean one = false;
+            boolean two = false;
+            boolean three = true;
+            
+            ArrayList<Integer> sorted = new ArrayList<Integer>();
+            Set<Integer> uni = new TreeSet<Integer>();
+           
+            int n = sc.nextInt();
+            
+            int[] nums = new int[n];
+            
+            for(int j=0;j<n;j++){
+                
+                int temp = sc.nextInt();
+                nums[j] = temp;
+                sorted.add(temp);
+                uni.add(temp);
+                
+            }
+            
+            Collections.sort(sorted);
+            boolean counter = true;
+            
+            if(uni.size() == n){
+                one = true;
+            }
+            
+            for(int k=0;k<n;k++){
+                
+                int a = (Integer)sorted.get(k);
+                int b = nums[k];
+                
+                if(! (b >= 1 && b <= n)){
+                    three = false;
+                }
+                
+                if(a == b){
+                    
+                }else{
+                    counter = false;
+                }
+                
+            }
+            
+            if(!counter){
+                two = true;
+            }
+            
+            boolean printed = false;
+            
+            if(one){
+                if(two){
+                    if(three){
+                        System.out.println("Beautiful");
+                        printed = true;
+                    }
+                }
+            }
+            if(!printed){
+            System.out.println("Ugly");
+            }
+        }
+        
+        
+    }
+    
+}
