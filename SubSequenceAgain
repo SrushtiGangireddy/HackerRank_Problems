@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        String s = sc.next();
+        int k = sc.nextInt();
+        
+        ArrayList<String> letters = new ArrayList<String>();
+        ArrayList<String> multiple = new ArrayList<String>();
+        Set<String> uni = new TreeSet<String>();
+        
+        int len = s.length();
+        
+        for(int i=0;i<len;i++){
+            
+            String temp = String.valueOf(s.charAt(i));
+            letters.add(temp);
+            uni.add(temp);
+            
+        }
+        
+        for(String un:uni){
+            int freq = Collections.frequency(letters,un);
+            
+            if(freq >= k){
+                multiple.add(un);
+            }
+            
+        }
+        
+        String result = "";
+        
+        for(int i=0;i<len;i++){
+            
+            String temp = String.valueOf(s.charAt(i));
+            if(!multiple.contains(temp)){
+                
+            }else{
+                result = result + temp;
+            }
+            
+        }
+        
+        
+        System.out.println(result);
+        
+    }
+}
