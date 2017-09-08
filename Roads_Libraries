@@ -1,0 +1,154 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int queries = sc.nextInt();
+        
+        for(int i=0;i<queries;i++){
+            
+            int vertices = sc.nextInt();
+            int edges = sc.nextInt();
+            
+            int clib = sc.nextInt();
+            int croad = sc.nextInt();
+            
+            Graph g = new Graph(vertices);
+            int[][] numEdges = new int[edges][2];
+            
+            for(int j=0;j<edges;j++){
+                
+                int u = sc.nextInt();
+                int v = sc.nextInt();
+                
+                g.makeEdge(u,v,1);
+                g.makeEdge(v,u,1);
+                
+                numEdges[j][0] = u-1;
+                numEdges[j][1] = v-1;
+                
+            }
+            
+            HashMap<Integer,Integer> cityMap = g.countComp(vertices,numEdges);
+            
+            long minCost = 0;
+            
+            Iterator it = cityMap.entrySet().iterator();
+            while(it.hasNext()){
+                Map.Entry pair = (Map.Entry)it.next();
+                
+                int key = (Integer)pair.getKey();
+                int val = (Integer)pair.getValue();
+                
+             //   System.out.println(key +" "+val);
+                
+                int cost1 = clib + (val-1)*croad;
+                int cost2 = clib*val;
+               
+                if(cost1 > cost2){
+                    minCost += cost2;
+                }else if(cost2 > cost1){
+                    minCost += cost1;
+                }else{
+                    minCost += cost1;
+                }
+                
+                
+              //  System.out.println(minCost);
+                
+            }
+            
+            System.out.println(minCost);
+            
+            
+        }
+        
+        
+    }
+}
+
+class Graph{
+    int v;
+    int[][] am;
+    
+    public Graph(int v){
+        am = new int[v+1][v+1];
+        this.v = v;
+    }
+    
+    public void makeEdge(int u,int v,int edge){
+        try{
+            am[u][v] = edge;
+        }catch(ArrayIndexOutOfBoundsException axe){
+            System.out.println("Vertices does not exist");
+        }
+    }
+    
+    public int getEdge(int u,int v){
+        try{
+            return am[u][v];
+        }catch(ArrayIndexOutOfBoundsException axe){
+            System.out.println("Vertices does not exist");
+        }
+        return -1;
+    }
+    
+    public HashMap<Integer,Integer> countComp(int n,int[][] edges){
+		
+		int count = n;
+		
+        ArrayList<Integer> components = new ArrayList<Integer>();
+        Set<Integer> uni = new TreeSet<Integer>();
+        
+		int[] root = new int[n];
+		
+		for(int i=0; i<n; i++){
+	        root[i]=i;        
+	    }
+		
+		for(int i=0; i<edges.length; i++){
+	        int x = edges[i][0];
+	        int y = edges[i][1];
+	 
+	        int xRoot = getRoot(root, x);
+	        int yRoot = getRoot(root, y);
+	 
+	        if(xRoot!=yRoot){
+	            count--;
+	            root[xRoot]=yRoot;
+	        }
+	 
+	    }
+	 
+        for(Integer ro:root){
+           // System.out.print(ro+" ");
+            components.add(ro);
+            uni.add(ro);
+        }//System.out.println();
+        
+        HashMap<Integer,Integer> comp_cities = new HashMap<Integer,Integer>();
+        
+        for(Integer u:uni){
+            comp_cities.put(u,Collections.frequency(components,u));
+        }
+        
+	    return comp_cities;
+		
+	}
+	
+	public int getRoot(int[] arr, int i){
+	    while(arr[i]!=i){
+	        arr[i]= arr[arr[i]];
+	        i=arr[i];
+	    }
+	    return i;
+	}
+    
+    
+    
+    
+}
