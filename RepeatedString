@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String s = in.next();
+        long n = in.nextLong();
+        
+        long counter = 0;
+        
+        for(int i=0;i<s.length();i++){
+            
+            if(s.charAt(i) == 'a'){
+                counter++;
+            }
+            
+        }
+        
+        long len = s.length();
+        
+        
+        long rem = n%len;
+        long quo = n/len;
+        
+        counter = counter*quo;
+        
+        int index = 0;
+        
+        while(index < rem){
+            int aIndex = s.indexOf('a',index);
+            
+            if((aIndex>-1) && (aIndex<rem)){
+                counter++;
+                index = aIndex;
+            }
+            index++;
+        }
+       
+        
+        System.out.println(counter);
+    }
+}
