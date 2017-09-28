@@ -1,0 +1,51 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+       
+        TreeMap<String,Integer> heights = new TreeMap<String,Integer>();
+        TreeMap<Integer,String> letters = new TreeMap<Integer,String>();
+        fillLetters(letters);
+        
+        for(int i=0;i<26;i++){
+            heights.put(letters.get(i),sc.nextInt());
+        }
+       
+        String word = sc.next();
+        
+        long width = 1*word.length();
+        
+        int max = Integer.MIN_VALUE;
+        
+        for(int i=0;i<word.length();i++){
+            
+            String key = Character.toString(word.charAt(i));
+            int temp = heights.get(key);
+            
+            if(temp > max){
+                max = temp;
+            }
+            
+        }
+        
+        System.out.println((width*max));
+        
+    }
+    public static void fillLetters(TreeMap<Integer,String> lets){
+        
+        lets.put(0,"a"); lets.put(1,"b"); lets.put(2,"c"); lets.put(3,"d");
+        lets.put(4,"e"); lets.put(5,"f"); lets.put(6,"g"); lets.put(7,"h");
+        lets.put(8,"i"); lets.put(9,"j"); lets.put(10,"k"); lets.put(11,"l");
+        lets.put(12,"m"); lets.put(13,"n"); lets.put(14,"o"); lets.put(15,"p");
+        lets.put(16,"q"); lets.put(17,"r"); lets.put(18,"s"); lets.put(19,"t");
+        lets.put(20,"u"); lets.put(21,"v"); lets.put(22,"w"); lets.put(23,"x");
+        lets.put(24,"y"); lets.put(25,"z");
+        
+    }
+}
