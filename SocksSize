@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+   public static void main(String args[]){
+       
+       Scanner sc = new Scanner(System.in);
+       
+       int n = sc.nextInt();
+       
+       //ArrayList<Integer> socks = new ArrayList<Integer>();
+       HashMap<Integer,Integer> sock_count = new HashMap<Integer,Integer>();
+       
+       for(int i=0;i<n;i++){
+           
+           int sock = sc.nextInt();
+           
+           if(sock_count.containsKey(sock)){
+               int count = (Integer)sock_count.get(sock);
+               count = count+1;
+               sock_count.put(sock,count);
+           }else{
+               sock_count.put(sock,1);
+           }
+           
+       }
+       
+       
+       int counter = 0;
+       
+       Iterator it = sock_count.entrySet().iterator();
+       while(it.hasNext()){
+           
+           Map.Entry pair = (Map.Entry)it.next();
+           
+           int sock_size=(Integer)pair.getKey();
+           int count = (Integer)pair.getValue();
+           
+           counter += (count)/2;
+           
+       }
+        
+       System.out.println(counter);
+       
+   }
+}
