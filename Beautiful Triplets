@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int d = sc.nextInt();
+        
+        int[] nums = new int[n];
+        
+        for(int i=0;i<n;i++){
+            
+            nums[i] = sc.nextInt();
+            
+        }
+        
+        int counter = 0;
+        
+        for(int i=0;i<n;i++){
+            
+            int a = nums[i];
+            
+            for(int j=i+1;j<n;j++){
+                
+                int b = nums[j];
+                
+                for(int k=j+1;k<n;k++){
+                    
+                    int c = nums[k];
+                    
+                    if((b-a) == (c-b)){
+                        
+                        if((b-a) == d){
+                            counter++;
+                        }
+                    }
+                    
+                }
+                
+                
+            }
+            
+        }
+        
+        System.out.println(counter);
+        
+    }
+}
+
+
+//Mathematical
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int d = sc.nextInt();
+        
+        HashSet<Integer> nums = new HashSet<Integer>();
+        int counter=0;
+        
+       // int[] nums = new int[n];
+        
+        for(int i=0;i<n;i++){
+            
+            int temp = sc.nextInt();
+            
+            if(nums.contains(temp-d) && nums.contains(temp - 2*d)){
+              
+                counter++;
+            }
+              nums.add(temp);
+            
+        }
+        
+        
+        System.out.println(counter);
+        
+    }
+}
