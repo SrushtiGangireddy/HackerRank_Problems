@@ -1,0 +1,22 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        int m = 5;
+        int sum = 0;
+        
+        while(n-- > 0){
+            sum += m/2;
+            m = m/2*3;
+        }
+        
+        System.out.println(sum);        
+    }
+}
