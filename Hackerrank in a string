@@ -1,0 +1,115 @@
+
+Practice
+Compete
+Jobs
+Rank
+Leaderboard
+
+Srushtireddy
+DashboardAlgorithmsStringsHackerRank in a String!
+Your HackerRank in a String! submission got 0.00 points.:(   Try Again
+×
+HackerRank in a String!
+by shashank21j
+Problem
+Submissions
+Leaderboard
+Discussions
+Editorial 
+We say that a string, , contains the word hackerrank if a subsequence of the characters in  spell the word hackerrank. For example, haacckkerrannkk does contain hackerrank, but haacckkerannk does not (the characters all appear in the same order, but it's missing a second r).
+
+More formally, let  be the respective indices of h, a, c, k, e, r, r, a, n, k in string . If  is true, then  contains hackerrank.
+
+You must answer  queries, where each query consists of a string, . For each query, print YES on a new line if contains hackerrank; otherwise, print NO instead.
+
+Input Format
+
+The first line contains an integer denoting  (the number of queries). 
+Each line of the  subsequent lines contains a single string denoting .
+
+Constraints
+
+Output Format
+
+For each query, print YES on a new line if  contains hackerrank; otherwise, print NO instead.
+
+Sample Input 0
+
+2
+hereiamstackerrank
+hackerworld
+Sample Output 0
+
+YES
+NO
+Explanation 0
+
+We perform the following  queries:
+
+ 
+The characters of hackerrank are bolded in the string above. Because the string contains all the characters in hackerrank in the same exact order as they appear in hackerrank, we print YES on a new line.
+ does not contain the last three characters of hackerrank, so we print NO on a new line.
+Easy
+Submitted 18014 times
+Max Score 20
+Need Help?
+
+View Discussions
+View Editorial Solution
+View Top Submissions
+Rate This Challenge:
+Download problem statement
+Download sample test cases
+Suggest Edits
+Current Buffer (saved locally, editable)     
+ 
+Java 8
+
+ 
+1
+import java.util.*;
+2
+import java.io.*;
+3
+public class Main {
+4
+    public static void main(String[] args) throws Exception {
+5
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+6
+        int q = Integer.parseInt(br.readLine());
+7
+        for (int test = 1; test <= q; test++) {
+8
+            StringTokenizer st = new StringTokenizer(br.readLine());
+9
+            String str = st.nextToken();
+10
+            char array[] = new char[]{'h', 'a', 'c', 'k', 'e', 'r', 'r', 'a', 'n', 'k'};
+11
+            int ptr = 0;
+12
+            for (int i = 0; i < str.length(); i++) {
+13
+                if (ptr <= 9 && str.charAt(i) == array[ptr]) ++ptr;
+14
+            }
+15
+            if (ptr == 10) System.out.println("YES");
+16
+            else System.out.println("NO");
+17
+        }
+18
+    }
+19
+}
+Line: 19 Col: 2
+Run Code  Submit Code Upload Code as File 
+Test against custom input
+Queued
+Test Case #0
+Test Case #1
+Test Case #2
+Join us on IRC at #hackerrank on freenode for hugs or bugs.
+Contest Calendar | Blog | Scoring | Environment | FAQ | About Us | Support | Careers | Terms Of Service | Privacy Policy | Request a Feature
