@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String s = in.next();
+        
+        int n = s.length();
+        
+        int counter = 0;
+        
+        for(int i=0;i<n-2;i=i+3){
+            
+           String temp = s.substring(i,i+3);
+           String test = "SOS";
+            
+           for(int j=0;j<3;j++){
+               
+               if(temp.charAt(j) != test.charAt(j)){
+                   counter++;
+               }
+               
+           } 
+           
+            
+            
+        }
+        
+        System.out.println(counter);
+    }
+}
