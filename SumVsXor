@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static long solve(long n) {
+       
+        String bin = Long.toString(n, 2);
+        //System.out.println(bin);
+        int counter = 0;
+        
+        for(int i=0;i<bin.length();i++){
+            
+            if(bin.charAt(i) == '0'){
+                counter++;
+            }
+            
+        }
+        double result = Math.pow(2,counter);
+        long res = (long)result;
+        return res;
+        
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        long n = in.nextLong();
+        long result = solve(n);
+        System.out.println(result);
+    }
+}
