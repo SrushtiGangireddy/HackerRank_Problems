@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        ArrayList<Integer> positive = new ArrayList<Integer>();
+        ArrayList<Integer> negative = new ArrayList<Integer>();
+        ArrayList<Integer> zeroes = new ArrayList<Integer>();
+        
+        for(int i=0;i<n;i++){
+            
+            int temp = sc.nextInt();
+            
+            if(temp < 0){
+                negative.add(temp);
+            }else if(temp == 0){
+                zeroes.add(temp);
+            }else if(temp > 0){
+                positive.add(temp);
+            }
+            
+        }
+        
+        double pos = positive.size()/n;
+        double neg = negative.size()/n;
+        double zer = zeroes.size()/n;
+        
+        System.out.println(pos);
+        System.out.println(neg);
+        System.out.println(zer);
+        
+        
+        
+    }
+}
