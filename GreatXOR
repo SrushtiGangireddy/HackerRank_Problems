@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static long theGreatXor(long x){
+        
+        String bits = Long.toString(x, 2);
+        double result = Math.pow(2,bits.length())-x-1;
+        long res = Math.round(result);
+        
+        return res;
+        
+        
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int q = in.nextInt();
+        for(int a0 = 0; a0 < q; a0++){
+            long x = in.nextLong();
+            long result = theGreatXor(x);
+            System.out.println(result);
+        }
+    }
+}
